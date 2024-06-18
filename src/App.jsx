@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MapComponent from './components/MapComponent';
+import GraphComponent from './components/GraphComponent';
 import './index.css';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
@@ -20,9 +21,19 @@ const App = () => {
       .then(stories => setStories(stories));
   }, []);
 
+  const transformDataForGraph = (stories) => {
+    return stories.map(story => ({
+      name: story.title,
+      upvotes: story.score,
+      comments: story.descendants || 0,
+    }));
+  };
+
   const filteredStories = stories.filter(story => 
     story.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const graphData = transformDataForGraph(filteredStories);
 
   return (
     <Router>
@@ -62,6 +73,7 @@ const App = () => {
                     ))}
                   </ul>
                   <MapComponent />
+                  <GraphComponent data={graphData} />
                 </>
               } />
               <Route path="/top-stories" element={<div>Top Stories Page</div>} />
