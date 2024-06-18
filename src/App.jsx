@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import MapComponent from './components/MapComponent';
 import './index.css';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
@@ -60,6 +61,7 @@ const App = () => {
                       </li>
                     ))}
                   </ul>
+                  <MapComponent />
                 </>
               } />
               <Route path="/top-stories" element={<div>Top Stories Page</div>} />
